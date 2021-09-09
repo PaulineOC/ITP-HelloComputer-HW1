@@ -1,1 +1,1 @@
-# ITP-HelloComputer-HW1
+# ITP-HelloComputer-HW1 - Global Onomatopoeia Menagerie
