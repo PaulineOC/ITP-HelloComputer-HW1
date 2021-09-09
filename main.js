@@ -54,14 +54,23 @@ const COUNTRIES = Object.freeze({
 
 const synth = window.speechSynthesis;
 
-const triggerAnimalOnomatopoeia = (text, language) => {
+const triggerAnimalOnomatopoeia = (text, language, textElement) => {
 	console.log(text, language);
 	if (synth.speaking) {
 		return;
 	}
+
 	let words = new SpeechSynthesisUtterance(text);
 	words.lang = language;
 	synth.speak(words);
+
+	words.onend = ()=> {
+		setTimeout(() => {
+			textElement.innerText = "";
+			//your code to be executed after 1 second
+		}, 275);
+
+	};
 };
 
 let currActiveCountry = null;
@@ -85,7 +94,6 @@ let allCountries = Object.keys(COUNTRIES).forEach((country)=>{
 		if(!currActiveCountry){
 			countryFilled.classList.add("hidden-fill");
 		}
-		//Hide tooltip
 	};
 });
 
@@ -97,35 +105,51 @@ const closeModal = document.querySelector("#close-modal").onclick = () => {
 	currActiveCountry = null;
 	const modal = document.querySelector("#options-modal");
 	modal.style.display = "none";
+
+	//Clear all pre-existing text
+	const allAnimalText = Array.from(document.getElementsByClassName("animal-text")).forEach((ele)=>{
+		ele.innerHTML = "";
+	});
+	console.log(allAnimalText);
 };
 
 
 const duck = document.querySelector("#duck").onclick = () => {
 	if(currActiveCountry){
-		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.duck,COUNTRIES[currActiveCountry].lang);
+		const duckText = document.getElementById("duck-text");
+		duckText.innerText = COUNTRIES[currActiveCountry].animals.duck;
+		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.duck,COUNTRIES[currActiveCountry].lang,duckText);
 	}
 };
 
 const rooster = document.querySelector("#rooster").onclick = () => {
 	if(currActiveCountry){
-		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.rooster,COUNTRIES[currActiveCountry].lang);
+		const roosterText = document.getElementById("rooster-text");
+		roosterText.innerText = COUNTRIES[currActiveCountry].animals.rooster;
+		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.rooster,COUNTRIES[currActiveCountry].lang, roosterText);
 	}
 };
 
 const dog = document.querySelector("#dog").onclick = () => {
 	if(currActiveCountry){
-		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.dog,COUNTRIES[currActiveCountry].lang);
+		const dogText = document.getElementById("dog-text");
+		dogText.innerText = COUNTRIES[currActiveCountry].animals.dog;
+		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.dog,COUNTRIES[currActiveCountry].lang, dogText);
 	}
 };
 
 const cat = document.querySelector("#cat").onclick = () => {
 	if(currActiveCountry){
-		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.cat,COUNTRIES[currActiveCountry].lang);
+		const catText = document.getElementById("cat-text");
+		catText.innerText = COUNTRIES[currActiveCountry].animals.cat;
+		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.cat,COUNTRIES[currActiveCountry].lang, catText);
 	}
 };
 
 const frog = document.querySelector("#frog").onclick = () => {
 	if(currActiveCountry){
-		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.frog,COUNTRIES[currActiveCountry].lang);
+		const frogText = document.getElementById("frog-text");
+		frogText.innerText = COUNTRIES[currActiveCountry].animals.frog;
+		triggerAnimalOnomatopoeia(COUNTRIES[currActiveCountry].animals.frog,COUNTRIES[currActiveCountry].lang, frogText);
 	}
 };
